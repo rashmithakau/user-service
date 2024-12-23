@@ -2,8 +2,6 @@ package com.LittleLanka.user_service.DTOs;
 
 import lombok.*;
 
-import java.util.Set;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -12,7 +10,7 @@ public class UserDTO {
     private Long userId;
     private String userName;
     private String email;
+    private String phoneNumber;
     private String password;
-    private Set<RoleDTO> roles;
     private String status;
 }
