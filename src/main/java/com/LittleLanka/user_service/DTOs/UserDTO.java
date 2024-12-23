@@ -9,7 +9,6 @@ import lombok.*;
 public class UserDTO {
     private Long userId;
     private String userName;
-    private String email;
     private String phoneNumber;
     private String password;
     private String status;

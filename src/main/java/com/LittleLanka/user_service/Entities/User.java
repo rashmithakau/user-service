@@ -19,9 +19,6 @@ public class User {
     @Column(nullable = false, length = 50)
     private String userName;
 
-    @Column(nullable = false, unique = true, length = 100)
-    private String email;
-
     @Column(nullable = false, unique = true, length = 15)
     private String phoneNumber;
 
@@ -29,14 +26,13 @@ public class User {
     private String password;
 
     @Column(nullable = false, length = 10)
-    private String status; // e.g., ACTIVE or INACTIVE
+    private String status; // ACTIVE or INACTIVE
 
-    // Add the roles property
     @ManyToMany
     @JoinTable(
             name = "user_roles", // Join table name
-            joinColumns = @JoinColumn(name = "user_id"), // Foreign key in join table for User
-            inverseJoinColumns = @JoinColumn(name = "role_id") // Foreign key in join table for Role
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private Set<Role> roles; // Many-to-Many relationship with Role
 }
