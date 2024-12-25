@@ -19,21 +19,20 @@ public class User {
     @Column(nullable = false, length = 50)
     private String userName;
 
-    @Column(nullable = false, unique = true, length = 10)
-    private String PhoneNumber;
+    @Column(nullable = false, unique = true, length = 15)
+    private String phoneNumber;
 
     @Column(nullable = false, length = 255)
     private String password;
 
-    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 10)
-    private Status status;
+    private String status; // ACTIVE or INACTIVE
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "roleId")
+            name = "user_roles", // Join table name
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles;
+    private Set<Role> roles; // Many-to-Many relationship with Role
 }
