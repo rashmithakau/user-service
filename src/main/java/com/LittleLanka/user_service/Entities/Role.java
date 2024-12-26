@@ -19,8 +19,8 @@ public class Role {
     @Column(nullable = false, unique = true, length = 20)
     private String roleName;
 
-    @Column(columnDefinition = "json")
-    private String permissions;
+    //@Column(columnDefinition = "json")
+    //private String permissions;
 
     @ManyToMany(mappedBy = "roles")
     private Set<User> users;
