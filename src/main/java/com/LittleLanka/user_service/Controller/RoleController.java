@@ -25,4 +25,11 @@ public class RoleController {
         return new ResponseEntity<>(roleDTO, HttpStatus.CREATED); // Return status 201
     }
 
+    // Endpoint to get all roles
+    @GetMapping("/get-all-roles")
+    public ResponseEntity<List<RoleDTO>> getAllRoles() {
+        List<RoleDTO> allRoles = roleService.getAllRoles();
+        return new ResponseEntity<>(allRoles, HttpStatus.OK); // Return status 200
+    }
+
 }

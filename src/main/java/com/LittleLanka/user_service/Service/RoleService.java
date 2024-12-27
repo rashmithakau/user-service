@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface RoleService {
     RoleDTO saveRole(RequestSaveRoleDTO requestSaveRoleDTO); // Save a role
+    List<RoleDTO> getAllRoles(); // Get all roles
 
 }

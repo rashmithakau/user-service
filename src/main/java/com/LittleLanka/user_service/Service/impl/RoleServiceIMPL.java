@@ -28,4 +28,15 @@ public class RoleServiceIMPL implements RoleService {
         role = roleRepository.save(role); // Save the role entity to the database
         return modelMapper.map(role, RoleDTO.class); // Map the saved entity to RoleDTO
     }
+
+    @Override
+    public List<RoleDTO> getAllRoles() {
+        List<Role> allRoles = roleRepository.findAll();
+        if (allRoles.isEmpty()) {
+            throw new RuntimeException("No roles found");
+        }
+        return allRoles.stream()
+                .map(role -> modelMapper.map(role, RoleDTO.class))
+                .collect(Collectors.toList());
+    }
 }
