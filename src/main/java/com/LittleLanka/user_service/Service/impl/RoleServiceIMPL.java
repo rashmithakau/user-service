@@ -2,13 +2,17 @@ package com.LittleLanka.user_service.Service.impl;
 
 import com.LittleLanka.user_service.DTOs.RoleDTO;
 import com.LittleLanka.user_service.DTOs.request.RequestSaveRoleDTO;
+import com.LittleLanka.user_service.DTOs.response.ResponseRoleDto;
+import com.LittleLanka.user_service.Entities.Permission;
 import com.LittleLanka.user_service.Entities.Role;
+import com.LittleLanka.user_service.Repositories.PermissionRepository;
 import com.LittleLanka.user_service.Repositories.RoleRepository;
 import com.LittleLanka.user_service.Service.RoleService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,12 +25,27 @@ public class RoleServiceIMPL implements RoleService {
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private PermissionRepository permissionRepository;
+
     @Override
-    public RoleDTO saveRole(RequestSaveRoleDTO requestSaveRoleDTO) {
-        // Map RequestSaveRoleDTO to Role entity
+    public ResponseRoleDto saveRole(RequestSaveRoleDTO requestSaveRoleDTO) {
+        List<Permission> permissionList=permissionRepository.findAllById(requestSaveRoleDTO.getPermissionIds());
         Role role = modelMapper.map(requestSaveRoleDTO, Role.class);
-        role = roleRepository.save(role); // Save the role entity to the database
-        return modelMapper.map(role, RoleDTO.class); // Map the saved entity to RoleDTO
+        role.setPermissions(permissionList);
+        Role roleSaved = roleRepository.save(role);
+
+        List<String> permisionStringList=new ArrayList<>();
+
+        for(Permission permission:permissionList){
+            permisionStringList.add(permission.getPermissionName());
+        }
+
+        ResponseRoleDto responseRoleDto =new ResponseRoleDto();
+        responseRoleDto.setRoleId(roleSaved.getRoleId());
+        responseRoleDto.setRoleName(roleSaved.getRoleName());
+        responseRoleDto.setPermissions(permisionStringList);
+        return responseRoleDto;
     }
 
     @Override

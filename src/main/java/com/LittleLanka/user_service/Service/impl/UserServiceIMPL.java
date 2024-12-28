@@ -2,6 +2,7 @@ package com.LittleLanka.user_service.Service.impl;
 
 import com.LittleLanka.user_service.DTOs.UserDTO;
 import com.LittleLanka.user_service.DTOs.request.RequestSaveUserDTO;
+import com.LittleLanka.user_service.DTOs.response.ResponseUserDto;
 import com.LittleLanka.user_service.Entities.User;
 import com.LittleLanka.user_service.Repositories.UserRepository;
 import com.LittleLanka.user_service.Service.UserService;
@@ -21,21 +22,22 @@ public class UserServiceIMPL implements UserService {
     private ModelMapper modelMapper;
 
     @Override
-    public UserDTO saveUser(RequestSaveUserDTO requestSaveUserDTO) {
+    public ResponseUserDto saveUser(RequestSaveUserDTO requestSaveUserDTO) {
         // Map RequestSaveUserDTO to Entity
         User user = modelMapper.map(requestSaveUserDTO, User.class);
-        user = userRepository.save(user); // Save the user entity to the database
-        return modelMapper.map(user, UserDTO.class); // Map saved entity to UserDTO
+        User savedUser=user = userRepository.save(user); // Save the user entity to the database
+        ResponseUserDto responseUserDto=modelMapper.map(user, ResponseUserDto.class);
+        return responseUserDto; // Map saved entity to UserDTO
     }
 
     @Override
-    public List<UserDTO> getAllUsers() {
+    public List<ResponseUserDto> getAllUsers() {
         List<User> allUsers = userRepository.findAll();
         if (allUsers.isEmpty()) {
             throw new RuntimeException("No users found");
         }
         return allUsers.stream()
-                .map(user -> modelMapper.map(user, UserDTO.class))
+                .map(user -> modelMapper.map(user, ResponseUserDto.class))
                 .collect(Collectors.toList());
     }
 }

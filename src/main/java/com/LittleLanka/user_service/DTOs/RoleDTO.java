@@ -2,6 +2,8 @@ package com.LittleLanka.user_service.DTOs;
 
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -9,5 +11,5 @@ import lombok.*;
 public class RoleDTO {
     private Long roleId;
     private String roleName;
-    //private String permissions;
+    private List<Long> permissionIds;
 }
