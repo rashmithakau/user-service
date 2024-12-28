@@ -3,6 +3,7 @@ package com.LittleLanka.user_service.Entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -11,7 +12,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Table(name = "roles")
-public class Role {
+public class Role {//1
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roleId;
@@ -19,9 +20,16 @@ public class Role {
     @Column(nullable = false, unique = true, length = 20)
     private String roleName;
 
-    //@Column(columnDefinition = "json")
-    //private String permissions;
+    @OneToMany(mappedBy = "role")
+    private List<User> user;
 
-    @ManyToMany(mappedBy = "roles")
-    private Set<User> users;
+    @ManyToMany
+    @JoinTable(
+            name = "user_permission",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "permission_id")
+    )
+    private List<Permission> permissions;
+
+
 }

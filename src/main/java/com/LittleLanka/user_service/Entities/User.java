@@ -1,9 +1,8 @@
 package com.LittleLanka.user_service.Entities;
 
+import com.LittleLanka.user_service.Entities.enums.UserStatus;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.Set;
 
 @Entity
 @Data
@@ -11,28 +10,25 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 @Table(name = "users")
-public class User {
+public class User {//m
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @Column(nullable = false, length = 50)
+    @Column(nullable = false, length = 40)
     private String userName;
 
-    @Column(nullable = false, unique = true, length = 15)
+    @Column(nullable = false, unique = true, length = 10)
     private String phoneNumber;
 
     @Column(nullable = false, length = 255)
     private String password;
 
     @Column(nullable = false, length = 10)
-    private String status; // ACTIVE or INACTIVE
+    private UserStatus status; // ACTIVE or INACTIVE
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_roles", // Join table name
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles; // Many-to-Many relationship with Role
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
+
 }

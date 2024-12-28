@@ -2,6 +2,7 @@ package com.LittleLanka.user_service.Controller;
 
 import com.LittleLanka.user_service.DTOs.RoleDTO;
 import com.LittleLanka.user_service.DTOs.request.RequestSaveRoleDTO;
+import com.LittleLanka.user_service.DTOs.response.ResponseRoleDto;
 import com.LittleLanka.user_service.Service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,8 +21,8 @@ public class RoleController {
 
     // Endpoint to save a role
     @PostMapping("/save-role")
-    public ResponseEntity<RoleDTO> saveRole(@RequestBody RequestSaveRoleDTO requestSaveRoleDTO) {
-        RoleDTO roleDTO = roleService.saveRole(requestSaveRoleDTO);
+    public ResponseEntity<ResponseRoleDto> saveRole(@RequestBody RequestSaveRoleDTO requestSaveRoleDTO) {
+        ResponseRoleDto roleDTO = roleService.saveRole(requestSaveRoleDTO);
         return new ResponseEntity<>(roleDTO, HttpStatus.CREATED); // Return status 201
     }
 
