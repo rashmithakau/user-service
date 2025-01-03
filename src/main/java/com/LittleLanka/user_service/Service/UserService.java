@@ -7,6 +7,8 @@ import com.LittleLanka.user_service.DTOs.response.ResponseUserDto;
 import java.util.List;
 
 public interface UserService {
-    ResponseUserDto saveUser(RequestSaveUserDTO requestSaveUserDTO);
-    List<ResponseUserDto> getAllUsers();
+    ResponseUserDto saveUser(RequestSaveUserDTO requestSaveUserDTO);  //saveuser
+    List<ResponseUserDto> getAllUsers();  //get all users
+
+    void updatePassword(Long userId, String newPassword);  //update user password
 }
