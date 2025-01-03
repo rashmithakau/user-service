@@ -1,6 +1,7 @@
 package com.LittleLanka.user_service.Service;
 
 import com.LittleLanka.user_service.DTOs.UserDTO;
+import com.LittleLanka.user_service.DTOs.request.RequestLoginDto;
 import com.LittleLanka.user_service.DTOs.request.RequestSaveUserDTO;
 import com.LittleLanka.user_service.DTOs.response.ResponseUserDto;
 
@@ -13,4 +14,6 @@ public interface UserService {
     void updatePassword(Long userId, String newPassword);  //update user password
 
     ResponseUserDto getUserById(Long userId);
+
+    ResponseUserDto getUserByUserNamPwd(RequestLoginDto requestLoginDto);
 }
