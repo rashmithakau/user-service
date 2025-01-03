@@ -59,4 +59,13 @@ public class UserServiceIMPL implements UserService {
 
         userRepository.save(user);
     }
+
+    @Override
+    public ResponseUserDto getUserById(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with ID " + userId));
+
+        return modelMapper.map(user, ResponseUserDto.class);
+    }
+
 }

@@ -41,4 +41,10 @@ public class UserController {
         userService.updatePassword(userId, newPassword);
         return new ResponseEntity<>("Password updated successfully", HttpStatus.OK);
     }
+
+    @GetMapping("/get-user/{userId}")
+    public ResponseEntity<ResponseUserDto> getUserById(@PathVariable Long userId) {
+        ResponseUserDto userDto = userService.getUserById(userId); // Ensure this returns ResponseUserDto
+        return new ResponseEntity<>(userDto, HttpStatus.OK); // Return status 200
+    }
 }

@@ -11,4 +11,6 @@ public interface UserService {
     List<ResponseUserDto> getAllUsers();  //get all users
 
     void updatePassword(Long userId, String newPassword);  //update user password
+
+    ResponseUserDto getUserById(Long userId);
 }
