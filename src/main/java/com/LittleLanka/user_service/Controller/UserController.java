@@ -1,9 +1,11 @@
 package com.LittleLanka.user_service.Controller;
 
 import com.LittleLanka.user_service.DTOs.UserDTO;
+import com.LittleLanka.user_service.DTOs.request.RequestLoginDto;
 import com.LittleLanka.user_service.DTOs.request.RequestSaveUserDTO;
 import com.LittleLanka.user_service.DTOs.response.ResponseUserDto;
 import com.LittleLanka.user_service.Service.UserService;
+import com.LittleLanka.user_service.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,4 +49,13 @@ public class UserController {
         ResponseUserDto userDto = userService.getUserById(userId); // Ensure this returns ResponseUserDto
         return new ResponseEntity<>(userDto, HttpStatus.OK); // Return status 200
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<StandardResponse> getUserByUserNamPwd(@RequestBody RequestLoginDto requestLoginDto) {
+        ResponseUserDto userDto = userService.getUserByUserNamPwd(requestLoginDto);
+        return new ResponseEntity<>(
+                new StandardResponse(HttpStatus.OK.value(), "Successfully retrieved user",userDto),
+                HttpStatus.OK);
+    }
+
 }
