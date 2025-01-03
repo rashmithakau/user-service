@@ -4,11 +4,11 @@ spring:
   datasource:
     url : jdbc:mysql://localhost:3306/UserDb?createDatabaseIfNotExist=true
     username : root
-    password :
+    password : mysqlpwd
   jpa :
     hibernate :
       ddl-auto : update
 server:
-  port: 8080
+  port: 8089
 
 

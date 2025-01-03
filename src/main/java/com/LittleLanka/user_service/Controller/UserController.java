@@ -32,4 +32,19 @@ public class UserController {
         List<ResponseUserDto> allUsers = userService.getAllUsers();
         return new ResponseEntity<>(allUsers, HttpStatus.OK); // Return status 200
     }
+
+    @PutMapping("/update-password/{userId}")
+    public ResponseEntity<String> updatePassword(
+            @PathVariable Long userId,
+            @RequestBody String newPassword
+    ) {
+        userService.updatePassword(userId, newPassword);
+        return new ResponseEntity<>("Password updated successfully", HttpStatus.OK);
+    }
+
+    @GetMapping("/get-user/{userId}")
+    public ResponseEntity<ResponseUserDto> getUserById(@PathVariable Long userId) {
+        ResponseUserDto userDto = userService.getUserById(userId); // Ensure this returns ResponseUserDto
+        return new ResponseEntity<>(userDto, HttpStatus.OK); // Return status 200
+    }
 }
