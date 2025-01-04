@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin // Enables Cross-Origin Resource Sharing
-@RequestMapping("api/v1/role") // Base path for all role-related endpoints
+@RequestMapping("api/v1/role")
 public class RoleController {
 
     @Autowired

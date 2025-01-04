@@ -13,11 +13,11 @@ import java.util.List;
 
 @RestController
 @CrossOrigin // Enables Cross-Origin Resource Sharing
-@RequestMapping("api/v1/user") // Base path for all user-related endpoints
+@RequestMapping("api/v1/user")
 public class UserController {
 
     @Autowired
-    private UserService userService; // Inject UserService dependency
+    private UserService userService;
 
     // Endpoint to save a user using RequestSaveUserDTO
     @PostMapping("/save-user")
@@ -44,7 +44,13 @@ public class UserController {
 
     @GetMapping("/get-user/{userId}")
     public ResponseEntity<ResponseUserDto> getUserById(@PathVariable Long userId) {
-        ResponseUserDto userDto = userService.getUserById(userId); // Ensure this returns ResponseUserDto
+        ResponseUserDto userDto = userService.getUserById(userId);
         return new ResponseEntity<>(userDto, HttpStatus.OK); // Return status 200
+    }
+    // Endpoint to delete a user
+    @DeleteMapping("/deactivate-user/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
+        userService.deactivateUser(userId);
+        return new ResponseEntity<>("User status updated to INACTIVE successfully", HttpStatus.OK);
     }
 }

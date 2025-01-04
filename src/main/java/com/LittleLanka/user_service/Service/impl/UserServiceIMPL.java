@@ -4,6 +4,7 @@ import com.LittleLanka.user_service.DTOs.UserDTO;
 import com.LittleLanka.user_service.DTOs.request.RequestSaveUserDTO;
 import com.LittleLanka.user_service.DTOs.response.ResponseUserDto;
 import com.LittleLanka.user_service.Entities.User;
+import com.LittleLanka.user_service.Entities.enums.UserStatus;
 import com.LittleLanka.user_service.Repositories.UserRepository;
 import com.LittleLanka.user_service.Service.UserService;
 import org.modelmapper.ModelMapper;
@@ -66,6 +67,15 @@ public class UserServiceIMPL implements UserService {
                 .orElseThrow(() -> new RuntimeException("User not found with ID " + userId));
 
         return modelMapper.map(user, ResponseUserDto.class);
+    }
+
+    @Override
+    public void deactivateUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with ID " + userId));
+
+        user.setStatus(UserStatus.INACTIVE);
+        userRepository.save(user);
     }
 
 }
