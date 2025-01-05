@@ -14,6 +14,9 @@ public interface UserService {
     void updatePassword(Long userId, String newPassword);  //update user password
 
     ResponseUserDto getUserById(Long userId);
+  
+    void deactivateUser(Long userId);   //deactivateUser
 
     ResponseUserDto getUserByUserNamPwd(RequestLoginDto requestLoginDto);
+
 }
