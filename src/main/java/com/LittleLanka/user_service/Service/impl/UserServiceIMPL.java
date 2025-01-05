@@ -1,6 +1,7 @@
 package com.LittleLanka.user_service.Service.impl;
 
 import com.LittleLanka.user_service.DTOs.UserDTO;
+import com.LittleLanka.user_service.DTOs.request.RequestLoginDto;
 import com.LittleLanka.user_service.DTOs.request.RequestSaveUserDTO;
 import com.LittleLanka.user_service.DTOs.response.ResponseUserDto;
 import com.LittleLanka.user_service.Entities.User;
@@ -76,6 +77,14 @@ public class UserServiceIMPL implements UserService {
 
         user.setStatus(UserStatus.INACTIVE);
         userRepository.save(user);
+
+    public ResponseUserDto getUserByUserNamPwd(RequestLoginDto requestLoginDto) {
+        if(!userRepository.existsByUserNameAndPassword(requestLoginDto.getUserName(), requestLoginDto.getPassword())){
+            throw new RuntimeException("User not found with name " + requestLoginDto.getUserName());
+        }
+
+        return modelMapper.map(userRepository.getUserByUserNameAndPassword(requestLoginDto.getUserName(),
+                requestLoginDto.getPassword()), ResponseUserDto.class);
     }
 
 }

@@ -1,9 +1,11 @@
 package com.LittleLanka.user_service.Controller;
 
 import com.LittleLanka.user_service.DTOs.UserDTO;
+import com.LittleLanka.user_service.DTOs.request.RequestLoginDto;
 import com.LittleLanka.user_service.DTOs.request.RequestSaveUserDTO;
 import com.LittleLanka.user_service.DTOs.response.ResponseUserDto;
 import com.LittleLanka.user_service.Service.UserService;
+import com.LittleLanka.user_service.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,10 +49,22 @@ public class UserController {
         ResponseUserDto userDto = userService.getUserById(userId);
         return new ResponseEntity<>(userDto, HttpStatus.OK); // Return status 200
     }
+
     // Endpoint to delete a user
     @DeleteMapping("/deactivate-user/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
         userService.deactivateUser(userId);
         return new ResponseEntity<>("User status updated to INACTIVE successfully", HttpStatus.OK);
     }
+
+
+    @PostMapping("/login")
+    public ResponseEntity<StandardResponse> getUserByUserNamPwd(@RequestBody RequestLoginDto requestLoginDto) {
+        ResponseUserDto userDto = userService.getUserByUserNamPwd(requestLoginDto);
+        return new ResponseEntity<>(
+                new StandardResponse(HttpStatus.OK.value(), "Successfully retrieved user",userDto),
+                HttpStatus.OK);
+    }
+
+
 }
