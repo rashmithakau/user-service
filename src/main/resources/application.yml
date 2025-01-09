@@ -2,8 +2,8 @@ spring:
   application:
     name: USER-SERVICE
   datasource:
-    url : jdbc:mysql://localhost:3306/UserDb?createDatabaseIfNotExist=true
-    username : root
+    url :
+    username :
     password :
   jpa :
     hibernate :
