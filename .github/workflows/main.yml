@@ -24,9 +24,9 @@ jobs:
           java-version: 17  # Adjust based on your project
           distribution: 'corretto'
 
-      # Step 3: Build Spring Boot project
+      # Step 3: Build Spring Boot project with debug logs
       - name: Build with Maven
-        run: mvn clean package -DskipTests
+        run: mvn clean package -DskipTests -X
 
       # Step 4: Docker login
       - name: Log in to Docker Hub
