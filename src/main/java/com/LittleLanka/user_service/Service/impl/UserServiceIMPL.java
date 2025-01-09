@@ -77,7 +77,7 @@ public class UserServiceIMPL implements UserService {
 
         user.setStatus(UserStatus.INACTIVE);
         userRepository.save(user);
-
+    }
     public ResponseUserDto getUserByUserNamPwd(RequestLoginDto requestLoginDto) {
         if(!userRepository.existsByUserNameAndPassword(requestLoginDto.getUserName(), requestLoginDto.getPassword())){
             throw new RuntimeException("User not found with name " + requestLoginDto.getUserName());
