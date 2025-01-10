@@ -3,6 +3,7 @@ package com.LittleLanka.user_service.Controller;
 import com.LittleLanka.user_service.DTOs.request.RequestLoginDto;
 import com.LittleLanka.user_service.DTOs.request.RequestSaveUserDTO;
 import com.LittleLanka.user_service.DTOs.response.ResponseUserDto;
+import com.LittleLanka.user_service.Entities.enums.UserStatus;
 import com.LittleLanka.user_service.Service.UserService;
 import com.LittleLanka.user_service.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,5 +66,14 @@ public class UserController {
                 HttpStatus.OK);
     }
 
+    @GetMapping("/get-users-by-status")
+    public ResponseEntity<List<ResponseUserDto>> getUsersByStatus(@RequestParam("status") UserStatus status) {
+        List<ResponseUserDto> users = userService.getAllUsers()
+                .stream()
+                .filter(user -> user.getStatus().equalsIgnoreCase(status.name()))
+                .toList();
+
+        return new ResponseEntity<>(users, HttpStatus.OK); // Response with status 200
+    }
 
 }
