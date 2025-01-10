@@ -31,7 +31,6 @@ public class UserServiceIMPL implements UserService {
 
         User user = modelMapper.map(requestSaveUserDTO, User.class);
 
-
         user.setPassword(passwordEncoder.encode(requestSaveUserDTO.getPassword()));
 
         // Save the user entity to the database
@@ -79,12 +78,13 @@ public class UserServiceIMPL implements UserService {
         userRepository.save(user);
     }
     public ResponseUserDto getUserByUserNamPwd(RequestLoginDto requestLoginDto) {
-        if(!userRepository.existsByUserNameAndPassword(requestLoginDto.getUserName(), requestLoginDto.getPassword())){
+        String bycriptedPwd=passwordEncoder.encode(requestLoginDto.getPassword());
+        if(!userRepository.existsByUserNameAndPassword(requestLoginDto.getUserName(), bycriptedPwd)){
             throw new RuntimeException("User not found with name " + requestLoginDto.getUserName());
         }
 
         return modelMapper.map(userRepository.getUserByUserNameAndPassword(requestLoginDto.getUserName(),
-                requestLoginDto.getPassword()), ResponseUserDto.class);
+                bycriptedPwd), ResponseUserDto.class);
     }
 
 }
