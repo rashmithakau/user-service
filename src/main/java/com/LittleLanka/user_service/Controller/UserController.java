@@ -1,6 +1,5 @@
 package com.LittleLanka.user_service.Controller;
 
-import com.LittleLanka.user_service.DTOs.UserDTO;
 import com.LittleLanka.user_service.DTOs.request.RequestLoginDto;
 import com.LittleLanka.user_service.DTOs.request.RequestSaveUserDTO;
 import com.LittleLanka.user_service.DTOs.response.ResponseUserDto;
