@@ -2,9 +2,9 @@ spring:
   application:
     name: USER-SERVICE
   datasource:
-    url: jdbc:mysql://user-service-database.crmk6gmiy488.eu-north-1.rds.amazonaws.com:3306/UserDb?createDatabaseIfNotExist=true
-    username: root
-    password: userDbpwd
+    url: 
+    username:
+    password: 
   jpa :
     hibernate :
       ddl-auto : update
