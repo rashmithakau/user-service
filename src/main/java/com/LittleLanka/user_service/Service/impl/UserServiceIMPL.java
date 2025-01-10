@@ -77,14 +77,20 @@ public class UserServiceIMPL implements UserService {
         user.setStatus(UserStatus.INACTIVE);
         userRepository.save(user);
     }
+
+    @Override
     public ResponseUserDto getUserByUserNamPwd(RequestLoginDto requestLoginDto) {
-        String bycriptedPwd=passwordEncoder.encode(requestLoginDto.getPassword());
-        if(!userRepository.existsByUserNameAndPassword(requestLoginDto.getUserName(), bycriptedPwd)){
+
+        if(!userRepository.existsByUserName(requestLoginDto.getUserName())){
             throw new RuntimeException("User not found with name " + requestLoginDto.getUserName());
         }
 
-        return modelMapper.map(userRepository.getUserByUserNameAndPassword(requestLoginDto.getUserName(),
-                bycriptedPwd), ResponseUserDto.class);
+        User user=userRepository.getUserByUserName(requestLoginDto.getUserName());
+        if(!passwordEncoder.matches(requestLoginDto.getPassword(),user.getPassword())){
+            throw new RuntimeException("Wrong password");
+        }
+
+        return modelMapper.map(user, ResponseUserDto.class);
     }
 
 }
