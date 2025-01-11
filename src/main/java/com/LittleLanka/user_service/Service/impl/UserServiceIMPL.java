@@ -32,7 +32,7 @@ public class UserServiceIMPL implements UserService {
         User user = modelMapper.map(requestSaveUserDTO, User.class);
 
         user.setPassword(passwordEncoder.encode(requestSaveUserDTO.getPassword()));
-
+        //
         // Save the user entity to the database
         User savedUser = userRepository.save(user);
 
