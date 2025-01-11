@@ -4,7 +4,6 @@ import com.LittleLanka.user_service.DTOs.UserDTO;
 import com.LittleLanka.user_service.DTOs.request.RequestLoginDto;
 import com.LittleLanka.user_service.DTOs.request.RequestSaveUserDTO;
 import com.LittleLanka.user_service.DTOs.response.ResponseUserDto;
-import com.LittleLanka.user_service.Entities.enums.UserStatus;
 
 import java.util.List;
 
