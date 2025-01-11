@@ -22,6 +22,6 @@ public class PermissionController {
     @PostMapping("/save")
     public ResponseEntity<PermissionDto> saveRole(@RequestBody RequestPermissionDto requestPermissionDto) {
         PermissionDto permissionDto = permissionService.saveRole(requestPermissionDto);
-        return new ResponseEntity<>(permissionDto, HttpStatus.CREATED); // Return status 201
+        return new ResponseEntity<>(permissionDto, HttpStatus.CREATED); // Return status  201
     }
 }
