@@ -1,9 +1,11 @@
 package com.LittleLanka.user_service.Service.impl;
 
+import com.LittleLanka.user_service.Entities.Permission;
 import com.LittleLanka.user_service.DTOs.UserDTO;
 import com.LittleLanka.user_service.DTOs.request.RequestLoginDto;
 import com.LittleLanka.user_service.DTOs.request.RequestSaveUserDTO;
 import com.LittleLanka.user_service.DTOs.response.ResponseUserDto;
+import com.LittleLanka.user_service.DTOs.response.ResponseUserWithPermissionsDto;
 import com.LittleLanka.user_service.Entities.User;
 import com.LittleLanka.user_service.Entities.enums.UserStatus;
 import com.LittleLanka.user_service.Repositories.UserRepository;
@@ -78,10 +80,34 @@ public class UserServiceIMPL implements UserService {
         userRepository.save(user);
     }
 
+
+    }
+
+    @Override
+    public ResponseUserWithPermissionsDto getUserWithPermissionsById(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with ID " + userId));
+
+        // Extract permissions from the user's role
+        List<String> permissions = user.getRole().getPermissions()
+                .stream()
+                .map(Permission::getPermissionName) // Convert Permission object to permission name
+                .collect(Collectors.toList());
+
+        // Return response with user details and permissions
+        return new ResponseUserWithPermissionsDto(
+                user.getUserId(),
+                user.getUserName(),
+                permissions
+        );
+    }
+
+
     @Override
     public ResponseUserDto getUserByUserNamPwd(RequestLoginDto requestLoginDto) {
 
         if(!userRepository.existsByUserName(requestLoginDto.getUserName())){
+
             throw new RuntimeException("User not found with name " + requestLoginDto.getUserName());
         }
 
@@ -94,3 +120,5 @@ public class UserServiceIMPL implements UserService {
     }
 
 }
+
+
