@@ -1,19 +1,19 @@
 package com.LittleLanka.user_service.Service.impl;
 
-import com.LittleLanka.user_service.Entities.Permission;
-import com.LittleLanka.user_service.DTOs.UserDTO;
 import com.LittleLanka.user_service.DTOs.request.RequestLoginDto;
 import com.LittleLanka.user_service.DTOs.request.RequestSaveUserDTO;
 import com.LittleLanka.user_service.DTOs.response.ResponseUserDto;
 import com.LittleLanka.user_service.DTOs.response.ResponseUserWithPermissionsDto;
+import com.LittleLanka.user_service.Entities.Permission;
 import com.LittleLanka.user_service.Entities.User;
 import com.LittleLanka.user_service.Entities.enums.UserStatus;
 import com.LittleLanka.user_service.Repositories.UserRepository;
 import com.LittleLanka.user_service.Service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -80,10 +80,6 @@ public class UserServiceIMPL implements UserService {
         userRepository.save(user);
     }
 
-
-    }
-
-    @Override
     public ResponseUserWithPermissionsDto getUserWithPermissionsById(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID " + userId));
@@ -119,6 +115,5 @@ public class UserServiceIMPL implements UserService {
         return modelMapper.map(user, ResponseUserDto.class);
     }
 
+
 }
-
-
