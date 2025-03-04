@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin // Enables Cross-Origin Resource Sharing
+@CrossOrigin("http://localhost:5173/")
 @RequestMapping("api/v1/role")
 public class RoleController {
 
