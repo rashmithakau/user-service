@@ -6,6 +6,9 @@ import com.LittleLanka.user_service.DTOs.request.RequestSaveUserDTO;
 import com.LittleLanka.user_service.DTOs.response.ResponseUserDto;
 import com.LittleLanka.user_service.Entities.enums.UserStatus;
 
+import com.LittleLanka.user_service.DTOs.response.ResponseUserWithPermissionsDto;
+
+
 import java.util.List;
 
 public interface UserService {
@@ -20,4 +23,5 @@ public interface UserService {
 
     ResponseUserDto getUserByUserNamPwd(RequestLoginDto requestLoginDto);
 
+    ResponseUserWithPermissionsDto getUserWithPermissionsById(Long userId);
 }
