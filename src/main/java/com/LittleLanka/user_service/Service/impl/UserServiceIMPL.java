@@ -115,5 +115,16 @@ public class UserServiceIMPL implements UserService {
         return modelMapper.map(user, ResponseUserDto.class);
     }
 
+    @Override
+    public List<ResponseUserDto> getUsersByStatus(UserStatus status) {
+        List<User> users = userRepository.findByStatus(status);
+        if (users.isEmpty()) {
+            throw new RuntimeException("No users found with status " + status);
+        }
+        return users.stream()
+                .map(user -> modelMapper.map(user, ResponseUserDto.class))
+                .collect(Collectors.toList());
+    }
+
 
 }

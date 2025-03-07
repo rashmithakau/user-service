@@ -5,6 +5,7 @@ import com.LittleLanka.user_service.DTOs.request.RequestSaveUserDTO;
 import com.LittleLanka.user_service.DTOs.response.ResponseUserDto;
 import com.LittleLanka.user_service.Entities.enums.UserStatus;
 import com.LittleLanka.user_service.DTOs.response.ResponseUserWithPermissionsDto;
+import com.LittleLanka.user_service.Entities.enums.UserStatus;
 
 import com.LittleLanka.user_service.Service.UserService;
 import com.LittleLanka.user_service.util.StandardResponse;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin // Enables Cross-Origin Resource Sharing
+@CrossOrigin("http://localhost:5173/")
 @RequestMapping("api/v1/user")
 public class UserController {
 
@@ -84,6 +85,13 @@ public class UserController {
     public ResponseEntity<ResponseUserWithPermissionsDto> getUserWithPermissionsById(@PathVariable Long userId) {
         ResponseUserWithPermissionsDto userWithPermissions = userService.getUserWithPermissionsById(userId);
         return new ResponseEntity<>(userWithPermissions, HttpStatus.OK); // Return status 200
+    }
+
+
+    @GetMapping("/get-users-by-status")
+    public ResponseEntity<List<ResponseUserDto>> getUsersByStatus(@RequestParam UserStatus status) {
+        List<ResponseUserDto> users = userService.getUsersByStatus(status);
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
 }
