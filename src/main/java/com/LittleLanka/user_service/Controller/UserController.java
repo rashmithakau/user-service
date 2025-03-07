@@ -3,8 +3,10 @@ package com.LittleLanka.user_service.Controller;
 import com.LittleLanka.user_service.DTOs.request.RequestLoginDto;
 import com.LittleLanka.user_service.DTOs.request.RequestSaveUserDTO;
 import com.LittleLanka.user_service.DTOs.response.ResponseUserDto;
+import com.LittleLanka.user_service.Entities.enums.UserStatus;
 import com.LittleLanka.user_service.DTOs.response.ResponseUserWithPermissionsDto;
 import com.LittleLanka.user_service.Entities.enums.UserStatus;
+
 import com.LittleLanka.user_service.Service.UserService;
 import com.LittleLanka.user_service.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,11 +67,24 @@ public class UserController {
                 HttpStatus.OK);
     }
 
+
+    @GetMapping("/get-users-by-status")
+    public ResponseEntity<List<ResponseUserDto>> getUsersByStatus(@RequestParam("status") UserStatus status) {
+        List<ResponseUserDto> users = userService.getAllUsers()
+                .stream()
+                .filter(user -> user.getStatus().equalsIgnoreCase(status.name()))
+                .toList();
+
+        return new ResponseEntity<>(users, HttpStatus.OK); // Response with status 200
+    }
+
+
     @GetMapping("/get-user-with-permissions/{userId}")
     public ResponseEntity<ResponseUserWithPermissionsDto> getUserWithPermissionsById(@PathVariable Long userId) {
         ResponseUserWithPermissionsDto userWithPermissions = userService.getUserWithPermissionsById(userId);
         return new ResponseEntity<>(userWithPermissions, HttpStatus.OK); // Return status 200
     }
+
 
     @GetMapping("/get-users-by-status")
     public ResponseEntity<List<ResponseUserDto>> getUsersByStatus(@RequestParam UserStatus status) {
@@ -85,4 +100,5 @@ public class UserController {
         userService.updatePhoneNumber(userId, newPhoneNumber);
         return new ResponseEntity<>("Phone number updated successfully", HttpStatus.OK);
     }
+
 }
