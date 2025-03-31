@@ -70,15 +70,15 @@ public class UserController {
     }
 
 
-    @GetMapping("/get-users-by-status")
-    public ResponseEntity<List<ResponseUserDto>> getUsersByStatus(@RequestParam("status") UserStatus status) {
-        List<ResponseUserDto> users = userService.getAllUsers()
-                .stream()
-                .filter(user -> user.getStatus().equalsIgnoreCase(status.name()))
-                .toList();
-
-        return new ResponseEntity<>(users, HttpStatus.OK); // Response with status 200
-    }
+//    @GetMapping("/get-users-by-status")
+//    public ResponseEntity<List<ResponseUserDto>> getUsersByStatus(@RequestParam("status") UserStatus status) {
+//        List<ResponseUserDto> users = userService.getAllUsers()
+//                .stream()
+//                .filter(user -> user.getStatus().equalsIgnoreCase(status.name()))
+//                .toList();
+//
+//        return new ResponseEntity<>(users, HttpStatus.OK); // Response with status 200
+//    }
 
 
     @GetMapping("/get-user-with-permissions/{userId}")
