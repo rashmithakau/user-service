@@ -13,7 +13,7 @@ import com.LittleLanka.user_service.Entities.enums.UserStatus;
 import java.util.List;
 
 public interface UserService {
-    ResponseUserDto saveUser(RequestSaveUserDTO requestSaveUserDTO);  //saveuser
+    ResponseUserDto saveUser(RequestSaveUserDTO requestSaveUserDTO);
     List<ResponseUserDto> getAllUsers();  //get all users
 
     void updatePassword(Long userId, String newPassword);  //update user password
@@ -27,4 +27,6 @@ public interface UserService {
     ResponseUserWithPermissionsDto getUserWithPermissionsById(Long userId);
 
     List<ResponseUserDto> getUsersByStatus(UserStatus status);
+
+    void updatePhoneNumber(Long userId, String newPhoneNumber);
 }

@@ -24,14 +24,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // Endpoint to save a user using RequestSaveUserDTO
+
     @PostMapping("/save-user")
     public ResponseEntity<ResponseUserDto> saveUser(@RequestBody RequestSaveUserDTO requestSaveUserDTO) {
         ResponseUserDto responseUserDto = userService.saveUser(requestSaveUserDTO);
         return new ResponseEntity<>(responseUserDto, HttpStatus.CREATED); // Return status 201
     }
 
-    // Endpoint to get all users
     @GetMapping("/get-all-users")
     public ResponseEntity<List<ResponseUserDto>> getAllUsers() {
         List<ResponseUserDto> allUsers = userService.getAllUsers();
@@ -53,8 +52,7 @@ public class UserController {
         return new ResponseEntity<>(userDto, HttpStatus.OK); // Return status 200
     }
 
-    // Endpoint to delete a user
-    @DeleteMapping("/deactivate-user/{userId}")
+    @PostMapping("/deactivate-user/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
         userService.deactivateUser(userId);
         return new ResponseEntity<>("User status updated to INACTIVE successfully", HttpStatus.OK);
@@ -92,6 +90,15 @@ public class UserController {
     public ResponseEntity<List<ResponseUserDto>> getUsersByStatus(@RequestParam UserStatus status) {
         List<ResponseUserDto> users = userService.getUsersByStatus(status);
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @PutMapping("/update-phone/{userId}")
+    public ResponseEntity<String> updatePhoneNumber(
+            @PathVariable Long userId,
+            @RequestBody String newPhoneNumber
+    ) {
+        userService.updatePhoneNumber(userId, newPhoneNumber);
+        return new ResponseEntity<>("Phone number updated successfully", HttpStatus.OK);
     }
 
 }

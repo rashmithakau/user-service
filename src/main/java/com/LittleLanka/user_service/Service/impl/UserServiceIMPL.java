@@ -30,17 +30,13 @@ public class UserServiceIMPL implements UserService {
 
     @Override
     public ResponseUserDto saveUser(RequestSaveUserDTO requestSaveUserDTO) {
-
         User user = modelMapper.map(requestSaveUserDTO, User.class);
-
         user.setPassword(passwordEncoder.encode(requestSaveUserDTO.getPassword()));
-        //
-        // Save the user entity to the database
+        user.setStatus(UserStatus.ACTIVE); // New users should be ACTIVE
         User savedUser = userRepository.save(user);
-
-
         return modelMapper.map(savedUser, ResponseUserDto.class);
     }
+
 
     @Override
     public List<ResponseUserDto> getAllUsers() {
@@ -77,8 +73,9 @@ public class UserServiceIMPL implements UserService {
                 .orElseThrow(() -> new RuntimeException("User not found with ID " + userId));
 
         user.setStatus(UserStatus.INACTIVE);
-        userRepository.save(user);
+        userRepository.save(user); // Just update status, do not delete
     }
+
 
     public ResponseUserWithPermissionsDto getUserWithPermissionsById(Long userId) {
         User user = userRepository.findById(userId)
@@ -87,7 +84,7 @@ public class UserServiceIMPL implements UserService {
         // Extract permissions from the user's role
         List<String> permissions = user.getRole().getPermissions()
                 .stream()
-                .map(Permission::getPermissionName) // Convert Permission object to permission name
+                .map(Permission::getPermissionName)
                 .collect(Collectors.toList());
 
         // Return response with user details and permissions
@@ -127,4 +124,12 @@ public class UserServiceIMPL implements UserService {
     }
 
 
+    @Override
+    public void updatePhoneNumber(Long userId, String newPhoneNumber) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found with ID " + userId));
+
+        user.setPhoneNumber(newPhoneNumber);
+        userRepository.save(user);
+    }
 }
