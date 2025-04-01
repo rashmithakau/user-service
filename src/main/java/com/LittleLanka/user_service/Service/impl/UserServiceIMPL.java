@@ -5,8 +5,10 @@ import com.LittleLanka.user_service.DTOs.request.RequestSaveUserDTO;
 import com.LittleLanka.user_service.DTOs.response.ResponseUserDto;
 import com.LittleLanka.user_service.DTOs.response.ResponseUserWithPermissionsDto;
 import com.LittleLanka.user_service.Entities.Permission;
+import com.LittleLanka.user_service.Entities.Role;
 import com.LittleLanka.user_service.Entities.User;
 import com.LittleLanka.user_service.Entities.enums.UserStatus;
+import com.LittleLanka.user_service.Repositories.RoleRepository;
 import com.LittleLanka.user_service.Repositories.UserRepository;
 import com.LittleLanka.user_service.Service.UserService;
 import org.modelmapper.ModelMapper;
@@ -21,6 +23,9 @@ import java.util.stream.Collectors;
 public class UserServiceIMPL implements UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -131,5 +136,30 @@ public class UserServiceIMPL implements UserService {
 
         user.setPhoneNumber(newPhoneNumber);
         userRepository.save(user);
+    }
+
+    @Override
+    public ResponseUserDto saveStaffUser(RequestSaveUserDTO requestSaveUserDTO) {
+        // Map DTO to User entity
+        User user = modelMapper.map(requestSaveUserDTO, User.class);
+
+        // Encode password
+        user.setPassword(passwordEncoder.encode(requestSaveUserDTO.getPassword()));
+
+        // Set user status to ACTIVE
+        user.setStatus(UserStatus.ACTIVE);
+
+        // Fetch "Staff" role from the database using injected RoleRepository
+        Role staffRole = roleRepository.findByRoleName("Staff")
+                .orElseThrow(() -> new RuntimeException("Role 'Staff' not found"));
+
+        // Assign the role to the user
+        user.setRole(staffRole);
+
+        // Save the user
+        User savedUser = userRepository.save(user);
+
+        // Return the response DTO
+        return modelMapper.map(savedUser, ResponseUserDto.class);
     }
 }
