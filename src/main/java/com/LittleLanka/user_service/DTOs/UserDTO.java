@@ -14,4 +14,5 @@ public class UserDTO {
     private String password;
     private String status;
     private Long roleId;
+    private  Long outletID;
 }
