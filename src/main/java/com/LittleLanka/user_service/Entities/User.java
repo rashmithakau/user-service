@@ -28,6 +28,9 @@ public class User {
     @Column(nullable = false, length = 10)
     private UserStatus status; // ACTIVE or INACTIVE
 
+    @Column
+    private  Long outletID;
+
     @ManyToOne
     @JoinColumn(name = "roleId")
     private Role role;
