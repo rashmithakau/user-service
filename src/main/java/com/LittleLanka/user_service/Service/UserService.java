@@ -28,6 +28,8 @@ public interface UserService {
 
     List<ResponseUserDto> getUsersByStatus(UserStatus status);
 
+    ResponseUserDto saveOutletUser(RequestSaveUserDTO requestSaveUserDTO);
+
     void updatePhoneNumber(Long userId, String newPhoneNumber);
 
     ResponseUserDto saveStaffUser(RequestSaveUserDTO requestSaveUserDTO);
