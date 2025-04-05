@@ -52,11 +52,15 @@ public class UserController {
         return new ResponseEntity<>(userDto, HttpStatus.OK); // Return status 200
     }
 
-    @PostMapping("/deactivate-user/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
-        userService.deactivateUser(userId);
-        return new ResponseEntity<>("User status updated to INACTIVE successfully", HttpStatus.OK);
+    @PutMapping("/update-status/{userId}")
+    public ResponseEntity<String> updateUserStatus(
+            @PathVariable Long userId,
+            @RequestBody String status
+    ) {
+        userService.updateUserStatus(userId, status);
+        return ResponseEntity.ok("Status updated successfully");
     }
+
 
 
     @PostMapping("/login")

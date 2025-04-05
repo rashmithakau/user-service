@@ -89,13 +89,15 @@ public class UserServiceIMPL implements UserService {
     }
 
     @Override
-    public void deactivateUser(Long userId) {
-        User user = userRepository.findById(userId)
+    public void updateUserStatus(Long userId, String status) {
+        User u = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID " + userId));
-
-        user.setStatus(UserStatus.INACTIVE);
-        userRepository.save(user); // Just update status, do not delete
+        UserStatus s = UserStatus.valueOf(status.toUpperCase());
+        u.setStatus(s);
+        userRepository.save(u);
     }
+
+
 
 
     public ResponseUserWithPermissionsDto getUserWithPermissionsById(Long userId) {
