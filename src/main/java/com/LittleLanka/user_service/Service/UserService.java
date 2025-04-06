@@ -33,4 +33,6 @@ public interface UserService {
     void updatePhoneNumber(Long userId, String newPhoneNumber);
 
     ResponseUserDto saveStaffUser(RequestSaveUserDTO requestSaveUserDTO);
+
+    List<ResponseUserDto> getOutletAndStaffUsers();
 }
