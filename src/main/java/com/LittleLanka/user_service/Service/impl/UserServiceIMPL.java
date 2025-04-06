@@ -202,21 +202,17 @@ public class UserServiceIMPL implements UserService {
     }
 
     @Override
-    public List<ResponseUserDto> getOutletAndStaffUsers() {
-        // Retrieve both roles from the database
-        Role outletRole = roleRepository.findByRoleName("Outlet")
-                .orElseThrow(() -> new RuntimeException("Role 'Outlet' not found"));
-        Role staffRole = roleRepository.findByRoleName("Staff")
-                .orElseThrow(() -> new RuntimeException("Role 'Staff' not found"));
+    public List<ResponseUserDto> getOutletUsers() {
+        // Retrieve only the Outlet role
+        Role outletRole = roleRepository.findByRoleName("outlet staff")
+                .orElseThrow(() -> new RuntimeException("Role 'outlet staff' not found"));
 
-        // Find users with either role
-        List<User> users = userRepository.findByRoleIn(List.of(outletRole, staffRole));
+        List<User> users = userRepository.findByRoleIn(List.of(outletRole));
 
         if (users.isEmpty()) {
-            throw new RuntimeException("No users found with roles Outlet or Staff");
+            throw new RuntimeException("No users found with Outlet role");
         }
 
-        // Convert to DTOs
         return users.stream()
                 .map(user -> modelMapper.map(user, ResponseUserDto.class))
                 .collect(Collectors.toList());

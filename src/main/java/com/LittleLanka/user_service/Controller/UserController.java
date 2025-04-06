@@ -116,9 +116,9 @@ public class UserController {
         return new ResponseEntity<>(responseUserDto, HttpStatus.CREATED);
     }
 
-    @GetMapping("/get-outlet-staff-users")
-    public ResponseEntity<List<ResponseUserDto>> getOutletAndStaffUsers() {
-        List<ResponseUserDto> users = userService.getOutletAndStaffUsers();
+    @GetMapping("/get-outlet-users")
+    public ResponseEntity<List<ResponseUserDto>> getOutletUsers() {
+        List<ResponseUserDto> users = userService.getOutletUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }

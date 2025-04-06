@@ -34,5 +34,4 @@ public interface UserService {
 
     ResponseUserDto saveStaffUser(RequestSaveUserDTO requestSaveUserDTO);
 
-    List<ResponseUserDto> getOutletAndStaffUsers();
-}
+    List<ResponseUserDto> getOutletUsers();}
