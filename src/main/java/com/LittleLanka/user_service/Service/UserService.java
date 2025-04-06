@@ -19,8 +19,8 @@ public interface UserService {
     void updatePassword(Long userId, String newPassword);  //update user password
 
     ResponseUserDto getUserById(Long userId);
-  
-    void deactivateUser(Long userId);   //deactivateUser
+
+    void updateUserStatus(Long userId, String status);
 
     ResponseUserDto getUserByUserNamPwd(RequestLoginDto requestLoginDto);
 
@@ -28,7 +28,10 @@ public interface UserService {
 
     List<ResponseUserDto> getUsersByStatus(UserStatus status);
 
+    ResponseUserDto saveOutletUser(RequestSaveUserDTO requestSaveUserDTO);
+
     void updatePhoneNumber(Long userId, String newPhoneNumber);
 
     ResponseUserDto saveStaffUser(RequestSaveUserDTO requestSaveUserDTO);
-}
+
+    List<ResponseUserDto> getOutletUsers();}

@@ -1,5 +1,6 @@
 package com.LittleLanka.user_service.Repositories;
 
+import com.LittleLanka.user_service.Entities.Role;
 import com.LittleLanka.user_service.Entities.User;
 import com.LittleLanka.user_service.Entities.enums.UserStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,5 +25,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByStatus(UserStatus status);
 
+    List<User> findByRoleIn(List<Role> roles);
 
 }

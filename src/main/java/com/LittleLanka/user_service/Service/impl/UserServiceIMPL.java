@@ -89,13 +89,15 @@ public class UserServiceIMPL implements UserService {
     }
 
     @Override
-    public void deactivateUser(Long userId) {
-        User user = userRepository.findById(userId)
+    public void updateUserStatus(Long userId, String status) {
+        User u = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID " + userId));
-
-        user.setStatus(UserStatus.INACTIVE);
-        userRepository.save(user); // Just update status, do not delete
+        UserStatus s = UserStatus.valueOf(status.toUpperCase());
+        u.setStatus(s);
+        userRepository.save(u);
     }
+
+
 
 
     public ResponseUserWithPermissionsDto getUserWithPermissionsById(Long userId) {
@@ -166,8 +168,8 @@ public class UserServiceIMPL implements UserService {
         user.setStatus(UserStatus.ACTIVE);
 
         // Fetch "Staff" role from the database using injected RoleRepository
-        Role staffRole = roleRepository.findByRoleName("Staff")
-                .orElseThrow(() -> new RuntimeException("Role 'Staff' not found"));
+        Role staffRole = roleRepository.findByRoleName("factory staff")
+                .orElseThrow(() -> new RuntimeException("Role 'factory staff' not found"));
 
         // Assign the role to the user
         user.setRole(staffRole);
@@ -178,4 +180,42 @@ public class UserServiceIMPL implements UserService {
         // Return the response DTO
         return modelMapper.map(savedUser, ResponseUserDto.class);
     }
+
+    @Override
+    public ResponseUserDto saveOutletUser(RequestSaveUserDTO requestSaveUserDTO) {
+        // Map DTO to User entity
+        User user = modelMapper.map(requestSaveUserDTO, User.class);
+
+        // Encode password
+        user.setPassword(passwordEncoder.encode(requestSaveUserDTO.getPassword()));
+
+        user.setStatus(UserStatus.ACTIVE);
+
+        Role outletRole = roleRepository.findByRoleName("outlet staff")
+                .orElseThrow(() -> new RuntimeException("Role 'Outlet' not found"));
+
+        user.setRole(outletRole);
+
+        User savedUser = userRepository.save(user);
+
+        return modelMapper.map(savedUser, ResponseUserDto.class);
+    }
+
+    @Override
+    public List<ResponseUserDto> getOutletUsers() {
+        // Retrieve only the Outlet role
+        Role outletRole = roleRepository.findByRoleName("outlet staff")
+                .orElseThrow(() -> new RuntimeException("Role 'outlet staff' not found"));
+
+        List<User> users = userRepository.findByRoleIn(List.of(outletRole));
+
+        if (users.isEmpty()) {
+            throw new RuntimeException("No users found with Outlet role");
+        }
+
+        return users.stream()
+                .map(user -> modelMapper.map(user, ResponseUserDto.class))
+                .collect(Collectors.toList());
+    }
+
 }
