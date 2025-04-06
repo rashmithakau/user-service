@@ -168,8 +168,8 @@ public class UserServiceIMPL implements UserService {
         user.setStatus(UserStatus.ACTIVE);
 
         // Fetch "Staff" role from the database using injected RoleRepository
-        Role staffRole = roleRepository.findByRoleName("Staff")
-                .orElseThrow(() -> new RuntimeException("Role 'Staff' not found"));
+        Role staffRole = roleRepository.findByRoleName("factory staff")
+                .orElseThrow(() -> new RuntimeException("Role 'factory staff' not found"));
 
         // Assign the role to the user
         user.setRole(staffRole);
