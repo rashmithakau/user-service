@@ -191,7 +191,7 @@ public class UserServiceIMPL implements UserService {
 
         user.setStatus(UserStatus.ACTIVE);
 
-        Role outletRole = roleRepository.findByRoleName("Outlet")
+        Role outletRole = roleRepository.findByRoleName("outlet staff")
                 .orElseThrow(() -> new RuntimeException("Role 'Outlet' not found"));
 
         user.setRole(outletRole);
