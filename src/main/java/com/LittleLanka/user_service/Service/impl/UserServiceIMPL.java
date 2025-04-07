@@ -181,21 +181,18 @@ public class UserServiceIMPL implements UserService {
 
     @Override
     public ResponseUserDto saveOutletUser(RequestSaveUserDTO requestSaveUserDTO) {
-        // Map DTO to User entity
-        User user = modelMapper.map(requestSaveUserDTO, User.class);
-
-        // Encode password
+        User user = new User();
+        user.setUserName(requestSaveUserDTO.getUserName());
+        user.setPhoneNumber(requestSaveUserDTO.getPhoneNumber());
         user.setPassword(passwordEncoder.encode(requestSaveUserDTO.getPassword()));
-
         user.setStatus(UserStatus.ACTIVE);
+        user.setOutletID(requestSaveUserDTO.getOutletID()); // Set the provided outletID
 
         Role outletRole = roleRepository.findByRoleName("outlet staff")
-                .orElseThrow(() -> new RuntimeException("Role 'Outlet' not found"));
-
+                .orElseThrow(() -> new RuntimeException("Role 'outlet staff' not found"));
         user.setRole(outletRole);
 
         User savedUser = userRepository.save(user);
-
         return modelMapper.map(savedUser, ResponseUserDto.class);
     }
 
