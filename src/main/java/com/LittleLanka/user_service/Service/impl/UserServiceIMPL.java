@@ -186,10 +186,11 @@ public class UserServiceIMPL implements UserService {
         user.setPhoneNumber(requestSaveUserDTO.getPhoneNumber());
         user.setPassword(passwordEncoder.encode(requestSaveUserDTO.getPassword()));
         user.setStatus(UserStatus.ACTIVE);
-        user.setOutletID(requestSaveUserDTO.getOutletID()); // Set the provided outletID
+        user.setOutletID(requestSaveUserDTO.getOutletID());
 
         Role outletRole = roleRepository.findByRoleName("outlet staff")
-                .orElseThrow(() -> new RuntimeException("Role 'outlet staff' not found"));
+                .orElseThrow(() -> new RuntimeException("Role 'Outlet' not found"));
+
         user.setRole(outletRole);
 
         User savedUser = userRepository.save(user);
