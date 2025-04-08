@@ -110,6 +110,7 @@ public class UserController {
         return new ResponseEntity<>(responseUserDto, HttpStatus.CREATED);
     }
 
+    // In UserController.java
     @PostMapping("/save-outlet-user")
     public ResponseEntity<ResponseUserDto> saveOutletUser(@RequestBody RequestSaveUserDTO requestSaveUserDTO) {
         ResponseUserDto responseUserDto = userService.saveOutletUser(requestSaveUserDTO);

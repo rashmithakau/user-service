@@ -190,6 +190,7 @@ public class UserServiceIMPL implements UserService {
 
         Role outletRole = roleRepository.findByRoleName("outlet staff")
                 .orElseThrow(() -> new RuntimeException("Role 'Outlet' not found"));
+
         user.setRole(outletRole);
 
         User savedUser = userRepository.save(user);
