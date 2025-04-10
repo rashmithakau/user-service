@@ -10,7 +10,8 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Table(name = "users")
-public class User {//m
+public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
@@ -27,8 +28,11 @@ public class User {//m
     @Column(nullable = false, length = 10)
     private UserStatus status; // ACTIVE or INACTIVE
 
+    @Column
+    private  Long outletID;
+
     @ManyToOne
-    @JoinColumn(name = "role_id", nullable = false)
+    @JoinColumn(name = "roleId")
     private Role role;
 
 }

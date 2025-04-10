@@ -6,6 +6,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+
 public class UserDTO {
     private Long userId;
     private String userName;
@@ -13,4 +14,5 @@ public class UserDTO {
     private String password;
     private String status;
     private Long roleId;
+    private  Long outletID;
 }

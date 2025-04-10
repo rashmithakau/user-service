@@ -14,4 +14,5 @@ public class RequestSaveUserDTO {
     private String password;
     private UserStatus userStatus;
     private Long roleId;
+    private  Long outletID;
 }

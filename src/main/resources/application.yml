@@ -2,13 +2,12 @@ spring:
   application:
     name: USER-SERVICE
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD} 
+    url: jdbc:mysql://35.222.69.207:3306/userDb?createDatabaseIfNotExist=true
+    username: springuser
+    password: springuserpwd
   jpa :
     hibernate :
       ddl-auto : update
 server:
   port: 8089
-
 

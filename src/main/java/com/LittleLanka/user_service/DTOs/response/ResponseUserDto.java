@@ -13,4 +13,5 @@ public class ResponseUserDto {
     private String phoneNumber;
     private String status;
     private Long roleId;
+    private  Long outletID;
 }
